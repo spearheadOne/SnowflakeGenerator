@@ -18,7 +18,7 @@ fun Application.configureApp() {
             description = "Example API for testing and demonstration purposes."
         }
         server {
-            url = "http://localhost:8080"
+            url = "http://localhost:8081"
             description = "Development Server"
         }
         install(ContentNegotiation) {

@@ -10,5 +10,6 @@ fun main(args: Array<String>) {
 fun Application.module() {
     configureApp()
     configureRouting()
+    configureCors()
 
 }

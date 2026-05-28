@@ -1,6 +1,5 @@
 package org.abondar.experimental.plugins
 
-import com.typesafe.config.ConfigFactory
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
