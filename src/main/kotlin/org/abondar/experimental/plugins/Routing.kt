@@ -13,6 +13,14 @@ fun Application.configureRouting() {
     val generator = SnowflakeGenerator(machineId.toLong())
 
     routing {
+
+        /**
+         * Generate snowflake id
+         *
+         *
+         * Responses:
+         * - 200: short url [SnowflakeResponse]
+         */
         get("/snowflake") {
             val id = generator.generateId()
             call.respond(SnowflakeResponse(id))

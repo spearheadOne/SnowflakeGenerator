@@ -1,22 +1,35 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-val kotlin_version: String by project
-val logback_version: String by project
+val logbackVersion: String by project
+val junitVersion: String by project
 
 plugins {
-    kotlin("jvm") version "2.0.0"
-    id("io.ktor.plugin") version "2.3.12"
-    id("com.google.cloud.tools.jib") version "3.1.1"
+    kotlin("jvm") version "2.3.21"
+    kotlin("plugin.serialization") version "2.3.21"
+    id("io.ktor.plugin") version "3.5.0"
+    id("com.google.cloud.tools.jib") version "3.4.3"
 }
 
 group = "org.abondar.experimental"
-version = "1.0.0"
+version = "1.1.0"
 
 application {
-    mainClass.set("io.ktor.server.jetty.EngineMain")
+    mainClass.set("io.ktor.server.netty.EngineMain")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
 }
 
 repositories {
@@ -24,31 +37,44 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-server-call-logging-jvm")
+    implementation("io.ktor:ktor-server-core")
+    implementation("io.ktor:ktor-server-call-logging")
+    implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-cors")
-    implementation("io.github.smiley4:ktor-swagger-ui:2.9.0")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm")
-    implementation("io.ktor:ktor-serialization-jackson-jvm")
-    implementation("io.ktor:ktor-server-jetty-jvm")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-server-swagger")
+    implementation("io.ktor:ktor-server-routing-openapi")
+    implementation("io.ktor:ktor-server-content-negotiation")
+    implementation("io.ktor:ktor-serialization-jackson")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.ktor:ktor-server-config-yaml")
-    testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
+
+    testImplementation("io.ktor:ktor-server-test-host")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "io.ktor.server.jetty.EngineMain"
+ktor {
+    openApi {
+        enabled = true
+        codeInferenceEnabled = true
+        onlyCommented = false
     }
 }
+
+tasks.test {
+    useJUnitPlatform()
+}
+
 
 var registry = System.getenv("DOCKER_REGISTRY")
 
 jib {
     from {
-        image = "eclipse-temurin:17-jre"
+        image = "eclipse-temurin:21-jre"
         platforms {
 //            platform {
 //                architecture = "amd64"

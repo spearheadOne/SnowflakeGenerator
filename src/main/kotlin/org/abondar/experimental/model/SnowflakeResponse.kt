@@ -1,9 +1,11 @@
 package org.abondar.experimental.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SnowflakeResponse (
 
-   @JsonProperty(value = "snowflake_id")
+    @field:JsonProperty(value = "snowflake_id")
    val snowflakeId: Long
 )

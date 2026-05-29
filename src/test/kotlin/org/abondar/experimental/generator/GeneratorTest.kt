@@ -1,11 +1,12 @@
 package org.abondar.experimental.generator
 
-import org.junit.Assert.assertThrows
-import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+
 
 class GeneratorTest {
 
