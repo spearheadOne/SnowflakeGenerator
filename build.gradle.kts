@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val logbackVersion: String by project
 val junitVersion: String by project
+val prometheusVersion: String by project
 
 plugins {
     kotlin("jvm") version "2.3.21"
@@ -47,6 +48,10 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.ktor:ktor-server-config-yaml")
+
+    implementation("io.ktor:ktor-server-metrics-micrometer")
+    implementation("io.micrometer:micrometer-registry-prometheus:$prometheusVersion")
+
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
 

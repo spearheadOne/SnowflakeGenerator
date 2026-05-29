@@ -7,7 +7,7 @@ import org.abondar.experimental.generator.SnowflakeGenerator
 import org.abondar.experimental.model.SnowflakeResponse
 
 
-fun Application.configureRouting() {
+fun Application.configureApiRouting() {
     val machineId = environment.config.property("snowflake.machineId").getString()
 
     val generator = SnowflakeGenerator(machineId.toLong())

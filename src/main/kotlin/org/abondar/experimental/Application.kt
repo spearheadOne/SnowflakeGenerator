@@ -9,8 +9,9 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureApp()
-    configureRouting()
+    configureApiRouting()
     configureCors()
     configureSwagger()
+    configureMetrics()
 
 }
