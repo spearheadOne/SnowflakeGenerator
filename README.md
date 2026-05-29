@@ -9,6 +9,10 @@ ID format is shown below
 | sign  | timestamp   | machine ID    | sequence      |
 
 
+## Prerequisites
+- JDK 21
+- Kotlin 2.3.10
+
 ## Build and run
 
 - Java build
@@ -33,3 +37,7 @@ docker run -it  -p8080:8080 -eMACHINE_ID=<value> <registry_name>/snowflakegenera
 Note: additionaly export DOCKER_USERNAME and DOCKER_PWD variables for non-local registry
 
 
+## Endpoints
+- /swaggerUI - Swagger UI
+- /metrics - Prometheus metrics
+- /health - Health check
